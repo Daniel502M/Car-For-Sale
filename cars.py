@@ -195,7 +195,7 @@ def get_cars_by_description(description):
 # @_UPDATE:
 cars_router2 = APIRouter(tags=['Cars Update'])
 
-@cars_router2.put("/cars_id")
+@cars_router2.put("/{id}")
 def update_cars_by_id(data: CarsCreateSchema, id: int):
     dbconn = DbConn()
 
@@ -210,7 +210,7 @@ def update_cars_by_id(data: CarsCreateSchema, id: int):
 # DELETE:
 cars_router3 = APIRouter(tags=['Cars Delete'])
 
-@cars_router3.delete("/cars_id")
+@cars_router3.delete("/{id}")
 def delite_cars_by_id(id):
     dbconn = DbConn()
 
