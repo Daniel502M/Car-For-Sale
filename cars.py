@@ -43,11 +43,11 @@ def add_cars(data: CarsCreateSchema):
         if verify_token != True:
             raise HTTPException(status_code=403, detail="Invalid token")
     except:
-        dbconn.cursor.execute("""INSERT INTO cars (brand, model, year, mileage, color,
-            price, engine_capacity, gearbox, drive, description, user_id)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
-                          (data.brand, data.model, data.year, data.mileage, data.color, data.price,
-                           data.engine_capacity, data.gearbox, data.drive, data.description, data.user_id))
+        dbconn.cursor.execute("""INSERT INTO cars (tipe, brand, model, year, mileage, color,
+            price, engine, engine_capacity, gearbox, drive, steering_wheel, region, description, user_id)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                          (data.tipe, data.brand, data.model, data.year, data.mileage, data.color, data.price, data.engine,
+                           data.engine_capacity, data.gearbox, data.drive, data.steering_wheel, data.region, data.description, data.user_id))
 
     dbconn.conn.commit()
 
@@ -87,6 +87,17 @@ def get_cars_by_brand(brand):
 
     dbconn.cursor.execute("""SELECT * FROM cars WHERE brand=%s""",
                           (brand,))
+
+    cars = dbconn.cursor.fetchall()
+
+    return cars
+
+@cars_router1.get("/{model}")
+def get_cars_by_model(model):
+    dbconn = DbConn()
+
+    dbconn.cursor.execute("""SELECT * FROM cars WHERE model=%s""",
+                          (model,))
 
     cars = dbconn.cursor.fetchall()
 
@@ -202,12 +213,12 @@ def get_cars_by_region(region):
 
     return cars
 
-@cars_router1.get("/{description}")
-def get_cars_by_description(description):
+@cars_router1.get("/{user_id}")
+def get_cars_by_user_id(user_id):
     dbconn = DbConn()
 
-    dbconn.cursor.execute("""SELECT * FROM cars WHERE description=%s""",
-                          (description,))
+    dbconn.cursor.execute("""SELECT * FROM cars WHERE user_id=%s""",
+                          (user_id,))
 
     cars = dbconn.cursor.fetchall()
 
