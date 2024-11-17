@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from fastapi import APIRouter, status
+from fastapi import APIRouter, Depends, HTTPException, Header, status
 from fastapi.exceptions import HTTPException
 from dbconn import DbConn
 
@@ -10,6 +10,25 @@ from auth_schemas import UserSignUpSchema, UserLoginSchema
 from security import hash_password, verify_password
 from cars_schemas import CarsCreateSchema
 # from buy_courses_schemas import BuyCoursesSchemas
+from typing import Optional
+from auth import verify_token
+# from models import User
+# from auth import user_id
+
+
+# # Функция для проверки токена
+# def verify_token(authorization: Optional[str] = Header(None)):
+#     if authorization is None or not authorization.startswith("Bearer "):
+#         raise HTTPException(status_code=401, detail="Token is missing or invalid")
+#
+#     token = authorization.split(" ")[1]  # Извлекаем токен после "Bearer"
+#
+#     # Здесь вы можете проверить токен (например, сравнить с хранимым токеном или проверить JWT)
+#     if token != verify_token:  # Замените на вашу логику проверки
+#         raise HTTPException(status_code=403, detail="Invalid token")
+#
+#     return token
+
 
 cars_router = APIRouter(tags=['Cars Create'])
 
@@ -19,13 +38,18 @@ cars_router = APIRouter(tags=['Cars Create'])
 @cars_router.post("/cars")
 def add_cars(data: CarsCreateSchema):
     dbconn = DbConn()
-
-    dbconn.cursor.execute("""INSERT INTO cars (tipe, brand, model, year, mileage, color, price,
-            engine, engine_capacity, gearbox, drive, steering_wheel, region, description)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
-                          (data.tipe, data.model, data.year, data.mileage, data.color, data.price,
-                           data. engine, data.engine_capacity, data.gearbox, data.drive,
-                           data.steering_wheel, data.region, data.duration))
+    # try:
+    #     # if user_id != True:
+    #     #     raise HTTPException(status_code=401, detail="User_id is not found")
+    #     if verify_token != True:
+    #         raise HTTPException(status_code=403, detail="Invalid token")
+    # except:
+    dbconn.cursor.execute("""INSERT INTO cars (tipe, brand, model, year, mileage, color, price, engine,
+            engine_capacity, gearbox, drive, steering_wheel, region, description, user_id)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                          (data.tipe, data.brand, data.model, data.year, data.mileage, data.color, data.price,
+                           data.engine, data.engine_capacity, data.gearbox, data.drive,
+                           data.steering_wheel, data.region, data.description, data.user_id))
 
     dbconn.conn.commit()
 

@@ -20,7 +20,7 @@ class Cars(Base):
     brand = Column(String, nullable=False)
     model = Column(String, nullable=False)
     year = Column(Integer, nullable=False)
-    mileage = Column(Float, nullable=False)
+    mileage = Column(Integer, nullable=False)
     color = Column(String, nullable=False)
     price = Column(Integer, nullable=False)
     engine = Column(String, nullable=False)
@@ -30,6 +30,7 @@ class Cars(Base):
     steering_wheel = Column(String, nullable=False)
     region = Column(String, nullable=False)
     description = Column(String, nullable=False)
+    user_id = Column(Integer, nullable=False)
     created_at = Column(TIMESTAMP, nullable=False, server_default=text("now()"))
 
 # class BayedCourses(Base):
