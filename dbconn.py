@@ -14,7 +14,7 @@ class DbConn:
                 self.conn = psycopg2.connect(
                     host='localhost',
                     user='postgres',
-                    database='curs',
+                    database='car_for_sale',
                     password='password',
                     cursor_factory=RealDictCursor
                 )

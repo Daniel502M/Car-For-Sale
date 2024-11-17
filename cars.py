@@ -20,8 +20,12 @@ cars_router = APIRouter(tags=['Cars Create'])
 def add_cars(data: CarsCreateSchema):
     dbconn = DbConn()
 
-    dbconn.cursor.execute("""INSERT INTO cars (name, duration, price) VALUES (%s, %s, %s)""",
-                          (data.name, data.duration, data.price))
+    dbconn.cursor.execute("""INSERT INTO cars (tipe, brand, model, year, mileage, color, price,
+            engine, engine_capacity, gearbox, drive, steering_wheel, region, description)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                          (data.tipe, data.model, data.year, data.mileage, data.color, data.price,
+                           data. engine, data.engine_capacity, data.gearbox, data.drive,
+                           data.steering_wheel, data.region, data.duration))
 
     dbconn.conn.commit()
 
@@ -31,18 +35,8 @@ def add_cars(data: CarsCreateSchema):
 # @_GET:
 cars_router1 = APIRouter(tags=['Cars Get'])
 
-@cars_router1.get("/{cars_id}")
-def get_curs_by_id(cars_id, user_id):
-    dbconn = DbConn()
-    # TODO:
-    dbconn.cursor.execute("""SELECT * FROM bayed_courses""")
-    all_buyed_courses = dbconn.cursor.fetchall()
-
-    for c in all_buyed_courses:
-        print(c)
-
-    return
-
+@cars_router1.get("/{id}")
+def get_cars_by_id(id):
     dbconn = DbConn()
 
     dbconn.cursor.execute("""SELECT * FROM cars WHERE id=%s""",
@@ -53,36 +47,145 @@ def get_curs_by_id(cars_id, user_id):
     return cars
 
 
-@cars_router1.get("/cars_name")
-def get_cars_by_name(name):
+@cars_router1.get("/{tipe}")
+def get_cars_by_tipe(tipe):
     dbconn = DbConn()
 
-    dbconn.cursor.execute("""SELECT * FROM cars WHERE name=%s""",
-                          (name,))
+    dbconn.cursor.execute("""SELECT * FROM cars WHERE tipe=%s""",
+                          (tipe,))
 
     cars = dbconn.cursor.fetchall()
 
     return cars
 
 
-@cars_router1.get("/cars_duration")
-def get_cars_by_duration(duration):
+@cars_router1.get("/{brand}")
+def get_cars_by_brand(brand):
     dbconn = DbConn()
 
-    dbconn.cursor.execute("""SELECT * FROM cars WHERE duration=%s""",
-                          (duration,))
+    dbconn.cursor.execute("""SELECT * FROM cars WHERE brand=%s""",
+                          (brand,))
 
     cars = dbconn.cursor.fetchall()
 
     return cars
 
+@cars_router1.get("/{year}")
+def get_cars_by_year(year):
+    dbconn = DbConn()
 
-@cars_router1.get("/cars_price")
+    dbconn.cursor.execute("""SELECT * FROM cars WHERE year=%s""",
+                          (year,))
+
+    cars = dbconn.cursor.fetchall()
+
+    return cars
+
+@cars_router1.get("/{mileage}")
+def get_cars_by_mileage(mileage):
+    dbconn = DbConn()
+
+    dbconn.cursor.execute("""SELECT * FROM cars WHERE mileage=%s""",
+                          (mileage,))
+
+    cars = dbconn.cursor.fetchall()
+
+    return cars
+
+@cars_router1.get("/{color}")
+def get_cars_by_color(color):
+    dbconn = DbConn()
+
+    dbconn.cursor.execute("""SELECT * FROM cars WHERE color=%s""",
+                          (color,))
+
+    cars = dbconn.cursor.fetchall()
+
+    return cars
+
+@cars_router1.get("/{price}")
 def get_cars_by_price(price):
     dbconn = DbConn()
 
     dbconn.cursor.execute("""SELECT * FROM cars WHERE price=%s""",
                           (price,))
+
+    cars = dbconn.cursor.fetchall()
+
+    return cars
+
+@cars_router1.get("/{engine}")
+def get_cars_by_engine(engine):
+    dbconn = DbConn()
+
+    dbconn.cursor.execute("""SELECT * FROM cars WHERE engine=%s""",
+                          (engine,))
+
+    cars = dbconn.cursor.fetchall()
+
+    return cars
+
+@cars_router1.get("/{engine_capacity}")
+def get_cars_by_engine_capacity(engine_capacity):
+    dbconn = DbConn()
+
+    dbconn.cursor.execute("""SELECT * FROM cars WHERE engine_capacity=%s""",
+                          (engine_capacity,))
+
+    cars = dbconn.cursor.fetchall()
+
+    return cars
+
+@cars_router1.get("/{gearbox}")
+def get_cars_by_gearbox(gearbox):
+    dbconn = DbConn()
+
+    dbconn.cursor.execute("""SELECT * FROM cars WHERE gearbox=%s""",
+                          (gearbox,))
+
+    cars = dbconn.cursor.fetchall()
+
+    return cars
+
+@cars_router1.get("/{drive}")
+def get_cars_by_drive(drive):
+    dbconn = DbConn()
+
+    dbconn.cursor.execute("""SELECT * FROM cars WHERE drive=%s""",
+                          (drive,))
+
+    cars = dbconn.cursor.fetchall()
+
+    return cars
+
+@cars_router1.get("/{steering_wheel}")
+def get_cars_by_steering_wheel(steering_wheel):
+    dbconn = DbConn()
+
+    dbconn.cursor.execute("""SELECT * FROM cars WHERE steering_wheel=%s""",
+                          (steering_wheel,))
+
+    cars = dbconn.cursor.fetchall()
+
+    return cars
+
+@cars_router1.get("/{region}")
+def get_cars_by_region(region):
+    dbconn = DbConn()
+
+    dbconn.cursor.execute("""SELECT * FROM cars WHERE region=%s""",
+                          (region,))
+
+    cars = dbconn.cursor.fetchall()
+
+    return cars
+
+@cars_router1.get("/{description}")
+def get_cars_by_description(description):
+    dbconn = DbConn()
+
+    dbconn.cursor.execute("""SELECT * FROM cars WHERE description=%s""",
+                          (description,))
 
     cars = dbconn.cursor.fetchall()
 
