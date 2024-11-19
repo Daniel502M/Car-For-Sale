@@ -229,10 +229,10 @@ def update_cars_by_id(data: CarsCreateSchema, id,
     dbconn = DbConn()
 
     dbconn.cursor.execute("""UPDATE cars SET tipe=%s, brand=%s, model=%s, year=%s, mileage=%s, color=%s, price=%s,
-                        engine=%s, engine_capacity=%s, gearbox=%s, drive=%s, steering_wheel=%s, region=%s, description=%s WHERE id=%s""",
+                        engine=%s, engine_capacity=%s, gearbox=%s, drive=%s, steering_wheel=%s, region=%s, description=%s WHERE user_id=%s""",
                           (data.tipe, data.brand, data.model, data.year, data.mileage, data.color, data.price,
                            data.engine, data.engine_capacity, data.gearbox, data.drive, data.steering_wheel, data.region,
-                           data.description, data.id, id))
+                           data.description, data.user_id))
 
     dbconn.conn.commit()
 
