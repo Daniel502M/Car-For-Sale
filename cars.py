@@ -15,18 +15,7 @@ from auth import verify_token
 # from auth import user_id
 
 
-# # Функция для проверки токена
-# def verify_token(authorization: Optional[str] = Header(None)):
-#     if authorization is None or not authorization.startswith("Bearer "):
-#         raise HTTPException(status_code=401, detail="Token is missing or invalid")
-#
-#     token = authorization.split(" ")[1]  # Извлекаем токен после "Bearer"
-#
-#     # Здесь вы можете проверить токен (например, сравнить с хранимым токеном или проверить JWT)
-#     if token != verify_token:  # Замените на вашу логику проверки
-#         raise HTTPException(status_code=403, detail="Invalid token")
-#
-#     return token
+
 
 
 cars_router = APIRouter(tags=['Cars Create'])
@@ -34,20 +23,28 @@ cars_router = APIRouter(tags=['Cars Create'])
 
 # @_CREATE:
 
-@cars_router.post("/{cars}")
-def add_cars(data: CarsCreateSchema):
+# # Функция для проверки токена
+# def verify_token(authorization: str = Header(None)):
+#     if not authorization:
+#         raise HTTPException(status_code=401, detail="Token is missing")
+#
+#     # Здесь можно добавить свою логику проверки токена (например, декодировать JWT)
+#     valid_tokens = ["valid_token_example"]  # Пример списка валидных токенов
+#     token = authorization.replace("Bearer ", "")  # Удаляем префикс "Bearer" из токена
+#
+#     if token not in valid_tokens:
+#         raise HTTPException(status_code=401, detail="Invalid token")
+#
+#     return token
+@cars_router.post("/cars")
+def add_cars(data: CarsCreateSchema, token: str = Depends(verify_token)):
     dbconn = DbConn()
-    try:
-        # if user_id != True:
-        #     raise HTTPException(status_code=401, detail="User_id is not found")
-        if verify_token != True:
-            raise HTTPException(status_code=403, detail="Invalid token")
-    except:
-        dbconn.cursor.execute("""INSERT INTO cars (tipe, brand, model, year, mileage, color,
-            price, engine, engine_capacity, gearbox, drive, steering_wheel, region, description, user_id)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
-                          (data.tipe, data.brand, data.model, data.year, data.mileage, data.color, data.price, data.engine,
-                           data.engine_capacity, data.gearbox, data.drive, data.steering_wheel, data.region, data.description, data.user_id))
+
+    dbconn.cursor.execute("""INSERT INTO cars (tipe, brand, model, year, mileage, color,
+        price, engine, engine_capacity, gearbox, drive, steering_wheel, region, description, user_id)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                      (data.tipe, data.brand, data.model, data.year, data.mileage, data.color, data.price, data.engine,
+                       data.engine_capacity, data.gearbox, data.drive, data.steering_wheel, data.region, data.description, data.user_id))
 
     dbconn.conn.commit()
 
