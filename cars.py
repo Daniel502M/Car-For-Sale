@@ -254,3 +254,16 @@ def delete_cars_by_id(id,
 
     return "OK"
 
+
+# .get("/users/{id}")
+# .get("/users/{name}")
+# .get("/users/{email}")
+#
+# /users/Vaxo
+
+
+# .get("/users/by-id/{id}")
+# .get("/users/by-name/{name}")
+# .get("/users/by-email{email}")
+#
+# /users/by-name/Vaxo

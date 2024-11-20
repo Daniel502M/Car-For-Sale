@@ -1,9 +1,11 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from dbconn import DbConn
 from users_schemas import UserSchema
 from auth_schemas import UserSignUpSchema
 from pydantic import EmailStr
 from security import hash_password
+import auth
+
 
 user_router = APIRouter(tags=['User Get'])
 
@@ -120,12 +122,13 @@ user_router2 = APIRouter(tags=['User Delete'])
 
 # @_DELETE
 
-@user_router2.delete("/user_id")
-def delete_user_by_id(id):
+@user_router2.delete("/users/delete/by-user-id/{user_id}")
+def delete_user_by_id(user_id: int,
+                      current_user = Depends(auth.get_current_user)):
     dbconn = DbConn()
 
     dbconn.cursor.execute("""DELETE FROM users WHERE id=%s""",
-                          (id,))
+                          (user_id,))
 
     dbconn.conn.commit()
 
