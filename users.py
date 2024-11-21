@@ -22,7 +22,7 @@ def get_all_users():
     return users
 
 
-@user_router.get("/user_id")
+@user_router.get("/{user_id}")
 def get_user_by_id(id):
     dbconn = DbConn()
 
@@ -33,7 +33,7 @@ def get_user_by_id(id):
     return user
 
 
-@user_router.get("/user_name")
+@user_router.get("/{user_name}")
 def get_users_by_name(data: UserSchema, name: str):
     dbconn = DbConn()
 
