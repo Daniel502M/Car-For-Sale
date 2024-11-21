@@ -18,7 +18,7 @@ cars_router = APIRouter(tags=['Cars Create'])
 
 # @_CREATE:
 
-@cars_router.post("/cars")
+@cars_router.post("/create/cars")
 def add_cars(data: CarsCreateSchema,
              current_user = Depends(auth.get_current_user)):
     dbconn = DbConn()
