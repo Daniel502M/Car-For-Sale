@@ -123,13 +123,13 @@ def get_cars_by_color(color,
 
     return cars
 
-@cars_router1.get("/cars/by-price/{price}")
-def get_cars_by_price(price,
+@cars_router1.get("/cars/by-price/{start_price}-{end_price}")
+def get_cars_by_price(start_price, end_price,
                       current_user = Depends(auth.get_current_user)):
     dbconn = DbConn()
 
-    dbconn.cursor.execute("""SELECT * FROM cars WHERE price=%s""",
-                          (price,))
+    dbconn.cursor.execute("""SELECT * FROM cars WHERE price>=%s and price<=%s""",
+                          (start_price, end_price))
 
     cars = dbconn.cursor.fetchall()
 
@@ -269,3 +269,4 @@ def delete_cars_by_id(id,
 # .get("/users/by-email{email}")
 #
 # /users/by-name/Vaxo
+

@@ -52,3 +52,11 @@ app.include_router(user_router2)
 
 if __name__ == "__main__":
     uvicorn.run(app, host='localhost', port=8000)
+
+
+# TODO:
+
+# TODO: photos
+# TODO: chat comments
+# TODO: card settings (user_card)
+# TODO: mail (gsmtp)
