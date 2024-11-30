@@ -10,6 +10,9 @@ from auth import auth_router
 from cars import cars_router, cars_router1, cars_router2, cars_router3
 from users import user_router, user_router1, user_router2
 
+# from download_photo import upload_router
+
+
 
 Base.metadata.create_all(bind=engine)
 
@@ -48,6 +51,8 @@ app.include_router(cars_router3)
 app.include_router(user_router)
 app.include_router(user_router1)
 app.include_router(user_router2)
+
+# app.include_router(upload_router)
 
 
 if __name__ == "__main__":
